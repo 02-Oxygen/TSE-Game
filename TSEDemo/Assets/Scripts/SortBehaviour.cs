@@ -4,13 +4,14 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
+[Serializable]
 public class SortBehaviour : MonoBehaviour
 {
     public static SortBehaviour Instance;
     public int[] array;
+    public GameObject[] rockObjectArray;
 
     [SerializeField] Transform parentPanel;   
-    [SerializeField] GameObject BoxPrefab;
 
     [SerializeField] TextMeshProUGUI correctText;
     [SerializeField] TextMeshProUGUI incorrectText;
@@ -19,7 +20,7 @@ public class SortBehaviour : MonoBehaviour
 
 
     bool canContinue;
-    bool finished;
+    public bool finished;
 
     private void Awake()
     {
@@ -39,7 +40,7 @@ public class SortBehaviour : MonoBehaviour
         if (bubblesort != null) { bubblesort.DestroyBoxes();}
         RandomiseArray();
         CreateArrayBoxes();
-        bubblesort = new BubbleSort(array, parentPanel);
+        bubblesort = new BubbleSort(array, rockObjectArray[0].GetComponentInChildren<TextMeshProUGUI>().color ,parentPanel);
         correctText.text = "Correct: 0";
         incorrectText.text = "Incorrect: 0";
     }
@@ -63,16 +64,18 @@ public class SortBehaviour : MonoBehaviour
     }
     void NextElement()
     {
-        bubblesort.NextStep(ref correctText, ref incorrectText, parentPanel);
+        finished = bubblesort.NextStep(ref correctText, ref incorrectText, parentPanel);
         if (bubblesort.i > bubblesort.max - 2) { bubblesort.p++; bubblesort.i = 0;}
-        if (bubblesort.p > bubblesort.max - 2) { finished = true; bubblesort.HighlightCurrent(true); }
+        if (finished) { bubblesort.HighlightCurrent(true); }
     }
 
     void CreateArrayBoxes()
     {
+        System.Random rnd = new System.Random();
         for (int i = 0; i < array.Length; i++)
         {
-            GameObject boxObject = Instantiate(BoxPrefab, parentPanel);
+            int randNum = rnd.Next(0, rockObjectArray.Length);
+            GameObject boxObject = Instantiate(rockObjectArray[randNum], parentPanel);
             boxObject.name = i.ToString();
             boxObject.transform.GetComponentInChildren<TextMeshProUGUI>().text = array[i].ToString();
         }

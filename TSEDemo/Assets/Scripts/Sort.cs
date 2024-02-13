@@ -4,11 +4,13 @@ using System.Collections.Generic;
 using System.Diagnostics.Tracing;
 using TMPro;
 using UnityEngine;
+using System.Linq;
 
 [Serializable]
 public abstract class Sort
 {
     public int[] array;
+    public int[] sortedArray;
     public int max;
     public int correct;
     public int incorrect;
@@ -16,13 +18,16 @@ public abstract class Sort
     public int i;
     public int p;
     public Transform parentPanel;
+    Color textColour;
 
-    public Sort(int[] array, Transform parentPanel)
+    public Sort(int[] array, Color textColour,Transform parentPanel)
     {
         this.array = array;
         this.parentPanel = parentPanel;
+        this.textColour = textColour;
         max = array.Length;
         resetArray = new int[array.Length];
+        SortArray();
         correct = 0;
         incorrect = 0;
         i = 0;
@@ -30,7 +35,8 @@ public abstract class Sort
         HighlightCurrent(false);
     }
 
-    public abstract void NextStep(ref TextMeshProUGUI correctText, ref TextMeshProUGUI incorrectText, Transform parentPanel);
+    public abstract bool NextStep(ref TextMeshProUGUI correctText, ref TextMeshProUGUI incorrectText, Transform parentPanel);
+    public abstract void SortArray();
 
     protected bool CheckBoxes(int a, int b)
     {
@@ -75,7 +81,7 @@ public abstract class Sort
                 {
                     box.GetComponentInChildren<TextMeshProUGUI>().color = Color.yellow;
                 }
-                else box.GetComponentInChildren<TextMeshProUGUI>().color = Color.white;
+                else box.GetComponentInChildren<TextMeshProUGUI>().color = textColour;
             }
         }
     }
@@ -96,14 +102,15 @@ public abstract class Sort
         }
     }
 
+
 }
 
 [Serializable]
 public class BubbleSort : Sort
 {
-    public BubbleSort(int[] array, Transform parentPanel) : base(array, parentPanel) { }
+    public BubbleSort(int[] array, Color textColour,Transform parentPanel) : base(array, textColour ,parentPanel) { }
 
-    public override void NextStep(ref TextMeshProUGUI correctText, ref TextMeshProUGUI incorrectText, Transform parentPanel)
+    public override bool NextStep(ref TextMeshProUGUI correctText, ref TextMeshProUGUI incorrectText, Transform parentPanel)
     {
         array.CopyTo(resetArray, 0);
         if (array[i] > array[i + 1])
@@ -116,7 +123,7 @@ public class BubbleSort : Sort
             correct++; 
             UIManager.Instance.UpdateText(correctText, "Correct: " + correct); 
             i++; 
-            HighlightCurrent(p > max - 2);
+            HighlightCurrent(false);
         }
         else
         {
@@ -126,6 +133,15 @@ public class BubbleSort : Sort
             resetArray.CopyTo(array, 0);
             ResetToArray();
         }
+
+        return Enumerable.SequenceEqual(array, sortedArray);
+    }
+
+    public override void SortArray()
+    {
+        sortedArray = new int[max];
+        array.CopyTo(sortedArray, 0);
+        Array.Sort(sortedArray);
     }
 
 }

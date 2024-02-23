@@ -56,17 +56,18 @@ public abstract class Sort
     }
 
 
-    public void BoxSwap(GameObject first, GameObject second)
+    public void BoxSwap(int first, int second)
     {
-        int tempValue = parentPanel.Find(first.name).GetComponent<SwappableObject>().value;
-        Sprite tempImage = parentPanel.Find(first.name).GetComponent<SwappableObject>().image.sprite;
-        parentPanel.Find(first.name).GetComponent<SwappableObject>().value = parentPanel.Find(second.name).GetComponent<SwappableObject>().value;
-        parentPanel.Find(first.name).GetComponent<SwappableObject>().image.sprite = parentPanel.Find(second.name).GetComponent<SwappableObject>().image.sprite;
-        parentPanel.Find(second.name).GetComponent<SwappableObject>().value = tempValue;
-        parentPanel.Find(second.name).GetComponent<SwappableObject>().image.sprite = tempImage;
+        SwappableObject firstObject = parentPanel.GetChild(first).GetComponent<SwappableObject>();
+        SwappableObject secondObject = parentPanel.GetChild(second).GetComponent<SwappableObject>();
 
-        parentPanel.Find(first.name).GetComponent<SwappableObject>().OnValueUpdate();
-        parentPanel.Find(second.name).GetComponent<SwappableObject>().OnValueUpdate();
+        int firstValue = firstObject.value;
+        firstObject.ChangeValue(secondObject.value);
+        secondObject.ChangeValue(firstValue);
+
+        Sprite firstSprite = firstObject.image.sprite;
+        firstObject.ChangeImage(secondObject.image.sprite);
+        secondObject.ChangeImage(firstSprite);
     }
 
     public void HighlightCurrent(bool finished)
@@ -99,7 +100,7 @@ public abstract class Sort
     {
         for (int i = 0; i < max; i++)
         {
-            parentPanel.GetChild(i).GetComponentInChildren<TextMeshProUGUI>().text = array[i].ToString();
+            parentPanel.GetChild(i).GetComponent<SwappableObject>().ChangeValue(array[i]);
         }
     }
 

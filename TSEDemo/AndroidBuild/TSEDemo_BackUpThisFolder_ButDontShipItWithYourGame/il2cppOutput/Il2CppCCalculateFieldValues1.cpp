@@ -10926,6 +10926,8 @@ struct SwappableObject_tF35AB2877B517291AB6876D0FEB22CDBB48E867E  : public MonoB
 	bool ___hoverOver_6;
 	// TMPro.TextMeshProUGUI SwappableObject::valueText
 	TextMeshProUGUI_t101091AF4B578BB534C92E9D1EEAF0611636D957* ___valueText_7;
+	// SwappableObject SwappableObject::swappableObject
+	SwappableObject_tF35AB2877B517291AB6876D0FEB22CDBB48E867E* ___swappableObject_8;
 };
 
 // TMPro.Examples.TMP_ExampleScript_01
@@ -17709,9 +17711,9 @@ IL2CPP_EXTERN_C const int32_t g_FieldOffsetTable3856[10] =
 IL2CPP_EXTERN_C const int32_t g_FieldOffsetTable3858[9] = 
 {
 	static_cast<int32_t>(offsetof(SortBehaviour_t79DF0C26BF46FC819C8CD038BBAAF7415FD531F2_StaticFields, ___Instance_4)),static_cast<int32_t>(offsetof(SortBehaviour_t79DF0C26BF46FC819C8CD038BBAAF7415FD531F2, ___array_5)),static_cast<int32_t>(offsetof(SortBehaviour_t79DF0C26BF46FC819C8CD038BBAAF7415FD531F2, ___rockObjectArray_6)),static_cast<int32_t>(offsetof(SortBehaviour_t79DF0C26BF46FC819C8CD038BBAAF7415FD531F2, ___parentPanel_7)),static_cast<int32_t>(offsetof(SortBehaviour_t79DF0C26BF46FC819C8CD038BBAAF7415FD531F2, ___bubblesort_8)),static_cast<int32_t>(offsetof(SortBehaviour_t79DF0C26BF46FC819C8CD038BBAAF7415FD531F2, ___canContinue_9)),static_cast<int32_t>(offsetof(SortBehaviour_t79DF0C26BF46FC819C8CD038BBAAF7415FD531F2, ___finished_10)),static_cast<int32_t>(offsetof(SortBehaviour_t79DF0C26BF46FC819C8CD038BBAAF7415FD531F2, ___uiManager_11)),static_cast<int32_t>(offsetof(SortBehaviour_t79DF0C26BF46FC819C8CD038BBAAF7415FD531F2, ___time_12)),};
-IL2CPP_EXTERN_C const int32_t g_FieldOffsetTable3859[4] = 
+IL2CPP_EXTERN_C const int32_t g_FieldOffsetTable3859[5] = 
 {
-	static_cast<int32_t>(offsetof(SwappableObject_tF35AB2877B517291AB6876D0FEB22CDBB48E867E, ___value_4)),static_cast<int32_t>(offsetof(SwappableObject_tF35AB2877B517291AB6876D0FEB22CDBB48E867E, ___image_5)),static_cast<int32_t>(offsetof(SwappableObject_tF35AB2877B517291AB6876D0FEB22CDBB48E867E, ___hoverOver_6)),static_cast<int32_t>(offsetof(SwappableObject_tF35AB2877B517291AB6876D0FEB22CDBB48E867E, ___valueText_7)),};
+	static_cast<int32_t>(offsetof(SwappableObject_tF35AB2877B517291AB6876D0FEB22CDBB48E867E, ___value_4)),static_cast<int32_t>(offsetof(SwappableObject_tF35AB2877B517291AB6876D0FEB22CDBB48E867E, ___image_5)),static_cast<int32_t>(offsetof(SwappableObject_tF35AB2877B517291AB6876D0FEB22CDBB48E867E, ___hoverOver_6)),static_cast<int32_t>(offsetof(SwappableObject_tF35AB2877B517291AB6876D0FEB22CDBB48E867E, ___valueText_7)),static_cast<int32_t>(offsetof(SwappableObject_tF35AB2877B517291AB6876D0FEB22CDBB48E867E, ___swappableObject_8)),};
 IL2CPP_EXTERN_C const int32_t g_FieldOffsetTable3860[5] = 
 {
 	static_cast<int32_t>(offsetof(UIManager_t16825A2483574F37D7D47AB939A6FA639678B1F3_StaticFields, ___Instance_4)),static_cast<int32_t>(offsetof(UIManager_t16825A2483574F37D7D47AB939A6FA639678B1F3, ___touchScreenUI_5)),static_cast<int32_t>(offsetof(UIManager_t16825A2483574F37D7D47AB939A6FA639678B1F3, ___timer_6)),static_cast<int32_t>(offsetof(UIManager_t16825A2483574F37D7D47AB939A6FA639678B1F3, ___correctText_7)),static_cast<int32_t>(offsetof(UIManager_t16825A2483574F37D7D47AB939A6FA639678B1F3, ___incorrectText_8)),};

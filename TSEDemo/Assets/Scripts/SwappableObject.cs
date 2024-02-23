@@ -13,10 +13,23 @@ public class SwappableObject : MonoBehaviour, IPointerEnterHandler, IPointerExit
     public bool hoverOver = false;
 
     [SerializeField] TextMeshProUGUI valueText;
+    private SwappableObject swappableObject;
 
     private void Update()
     {
         Click();
+    }
+
+    public void ChangeValue(int value)
+    {
+        this.value = value;
+        OnValueUpdate();
+    }
+
+    public void ChangeImage(Sprite sprite)
+    {
+        image.sprite = sprite;
+        OnValueUpdate();
     }
 
     public void Click()
@@ -27,8 +40,8 @@ public class SwappableObject : MonoBehaviour, IPointerEnterHandler, IPointerExit
 
     public void OnValueUpdate()
     {
-        valueText.text = value.ToString();
         image.sprite = image.sprite;
+        valueText.text = value.ToString();
     }
     public void OnPointerEnter(PointerEventData eventData)
     {

@@ -25,14 +25,15 @@ public class UserControl : MonoBehaviour
 
     public void ClickOnInteractable(GameObject interactable)
     {
-        if (!gamecontrols.Gameplay.Interact.WasPerformedThisFrame()) { return; }
+        if (!gamecontrols.Gameplay.Interact.WasPressedThisFrame()) { return; }
         if (first == interactable || second == interactable) { return; }
+
 
         if (first == null) { first = interactable; }
         else if (second == null)
         { 
             second = interactable;
-            SortBehaviour.Instance.bubblesort.BoxSwap(first, second);
+            SortBehaviour.Instance.bubblesort.BoxSwap(int.Parse(first.name), int.Parse(second.name));
             ClearSwap();
         }
     }

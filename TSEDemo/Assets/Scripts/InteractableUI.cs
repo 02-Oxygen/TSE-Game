@@ -4,28 +4,8 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class InteractableUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class InteractableUI : MonoBehaviour
 {
-    public ButtonType buttonType;
-    public enum ButtonType 
-    {
-        None,
-        Swappable,
-    }
-
-    public bool hoverOver = false;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (buttonType == ButtonType.Swappable) { if (hoverOver) { UserControl.Instance.ClickOnInteractable(gameObject); } }
-    }
-
     public void OnPressConfirm()
     {
         SortBehaviour.Instance.CheckCanContinue();
@@ -49,14 +29,4 @@ public class InteractableUI : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         UserControl.Instance.ClearSwap();
     }
 
-
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        hoverOver = true;
-    }
-
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        hoverOver = false;
-    }
 }

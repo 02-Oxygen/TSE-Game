@@ -91,7 +91,8 @@ public class SortBehaviour : MonoBehaviour
             int randNum = rnd.Next(0, rockObjectArray.Length);
             GameObject boxObject = Instantiate(rockObjectArray[randNum], parentPanel);
             boxObject.name = i.ToString();
-            boxObject.transform.GetComponentInChildren<TextMeshProUGUI>().text = array[i].ToString();
+            boxObject.GetComponent<SwappableObject>().value = array[i];
+            boxObject.GetComponent<SwappableObject>().OnValueUpdate();
         }
     }
 }

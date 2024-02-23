@@ -12,6 +12,7 @@ public class UserControl : MonoBehaviour
 
     private GameControls gamecontrols;
 
+
     private void Awake()
     {
         if (Instance == null) { Instance = this; }
@@ -31,7 +32,7 @@ public class UserControl : MonoBehaviour
         else if (second == null)
         { 
             second = interactable;
-            SortBehaviour.Instance.bubblesort.BoxSwap(int.Parse(first.transform.parent.name), int.Parse(second.transform.parent.name));
+            SortBehaviour.Instance.bubblesort.BoxSwap(first, second);
             ClearSwap();
         }
     }
@@ -71,8 +72,6 @@ public class UserControl : MonoBehaviour
         SortBehaviour.Instance.StartSort();
         Instance.ClearSwap();
     }
-
-
 
     public void ClearSwap()
     {

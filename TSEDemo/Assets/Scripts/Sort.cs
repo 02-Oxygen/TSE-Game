@@ -5,6 +5,9 @@ using System.Diagnostics.Tracing;
 using TMPro;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.UI;
+using UnityEngine.UIElements;
+using Image = UnityEngine.UIElements.Image;
 
 [Serializable]
 public abstract class Sort
@@ -53,11 +56,17 @@ public abstract class Sort
     }
 
 
-    public void BoxSwap(int namea, int nameb)
+    public void BoxSwap(GameObject first, GameObject second)
     {
-        string temp = parentPanel.GetChild(namea).GetComponentInChildren<TextMeshProUGUI>().text;
-        parentPanel.GetChild(namea).GetComponentInChildren<TextMeshProUGUI>().text = parentPanel.GetChild(nameb).GetComponentInChildren<TextMeshProUGUI>().text;
-        parentPanel.GetChild(nameb).GetComponentInChildren<TextMeshProUGUI>().text = temp;
+        int tempValue = parentPanel.Find(first.name).GetComponent<SwappableObject>().value;
+        Sprite tempImage = parentPanel.Find(first.name).GetComponent<SwappableObject>().image.sprite;
+        parentPanel.Find(first.name).GetComponent<SwappableObject>().value = parentPanel.Find(second.name).GetComponent<SwappableObject>().value;
+        parentPanel.Find(first.name).GetComponent<SwappableObject>().image.sprite = parentPanel.Find(second.name).GetComponent<SwappableObject>().image.sprite;
+        parentPanel.Find(second.name).GetComponent<SwappableObject>().value = tempValue;
+        parentPanel.Find(second.name).GetComponent<SwappableObject>().image.sprite = tempImage;
+
+        parentPanel.Find(first.name).GetComponent<SwappableObject>().OnValueUpdate();
+        parentPanel.Find(second.name).GetComponent<SwappableObject>().OnValueUpdate();
     }
 
     public void HighlightCurrent(bool finished)

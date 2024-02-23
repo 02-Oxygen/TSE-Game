@@ -673,8 +673,8 @@ MonoBehaviour:
   m_ChildAlignment: 4
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 150, y: 150}
-  m_Spacing: {x: 0, y: 0}
+  m_CellSize: {x: 180, y: 180}
+  m_Spacing: {x: 10, y: 0}
   m_Constraint: 0
   m_ConstraintCount: 1
 --- !u!114 &572434020
@@ -1031,12 +1031,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9df13694c5d478458516ff35ba757d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  array: 0a0000002e0000002e0000002e0000002e000000
+  array: 0a0000002e0000002e0000002e0000002e0000002e0000002e0000002e000000
   rockObjectArray:
   - {fileID: 8932278073386958691, guid: 8df375c2be6e07e43883175cd581486c, type: 3}
   - {fileID: 8932278073386958691, guid: d91fd3a1e3403ee4db091cecbaa18abf, type: 3}
-  - {fileID: 8932278073386958691, guid: 403ffc9a58700094a85806f191cb2864, type: 3}
+  - {fileID: 8932278073386958691, guid: dfdc6a3492eaf85468ba53cb17f666fb, type: 3}
   - {fileID: 8932278073386958691, guid: bf6ea066fa68a5d43bfdf33195b13699, type: 3}
+  - {fileID: 8932278073386958691, guid: ca2472f3fb6c8854c882ed1e0e8bdd07, type: 3}
+  - {fileID: 8932278073386958691, guid: c81d41dab209426439bc4c8b9780bab1, type: 3}
   parentPanel: {fileID: 572434018}
   canContinue: 0
   finished: 0
@@ -1793,7 +1795,7 @@ MonoBehaviour:
     m_ActionId: 60946074-3694-4421-93a0-c44d87ed9b8f
     m_ActionName: Gameplay/Cancel[/Mouse/rightButton]
   m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: Keyboard & Mouse
+  m_DefaultControlScheme: TouchScreen
   m_DefaultActionMap: Gameplay
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
@@ -2880,5 +2882,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a2bda593d89adf409d6a00994ca1560, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttonType: 0
-  hoverOver: 0

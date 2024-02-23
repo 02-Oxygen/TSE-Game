@@ -6,7 +6,14 @@ using UnityEngine.EventSystems;
 
 public class InteractableUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    bool hoverOver = false;
+    public ButtonType buttonType;
+    public enum ButtonType 
+    {
+        None,
+        Swappable,
+    }
+
+    public bool hoverOver = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,8 +23,33 @@ public class InteractableUI : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     // Update is called once per frame
     void Update()
     {
-        if (hoverOver) { if (Input.GetMouseButtonDown(0)) { UserControl.Instance.ClickOnInteractable(gameObject); } }
+        if (buttonType == ButtonType.Swappable) { if (hoverOver) { UserControl.Instance.ClickOnInteractable(gameObject); } }
     }
+
+    public void OnPressConfirm()
+    {
+        SortBehaviour.Instance.CheckCanContinue();
+        UserControl.Instance.ClearSwap();
+    }
+
+    public void OnSwapCancel()
+    {
+        UserControl.Instance.ClearSwap();
+    }
+
+    public void OnReset()
+    {
+        SortBehaviour.Instance.ResetToArray();
+        UserControl.Instance.ClearSwap();
+    }
+
+    public void OnRenew()
+    {
+        SortBehaviour.Instance.StartSort();
+        UserControl.Instance.ClearSwap();
+    }
+
+
     public void OnPointerEnter(PointerEventData eventData)
     {
         hoverOver = true;

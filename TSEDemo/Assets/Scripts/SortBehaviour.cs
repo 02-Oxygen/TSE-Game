@@ -13,14 +13,13 @@ public class SortBehaviour : MonoBehaviour
 
     [SerializeField] Transform parentPanel;   
 
-    [SerializeField] TextMeshProUGUI correctText;
-    [SerializeField] TextMeshProUGUI incorrectText;
-
-   public Sort bubblesort;
-
-
-    bool canContinue;
+    public Sort bubblesort;
+    public bool canContinue;
     public bool finished;
+
+
+    private UIManager uiManager;
+    private float time = 0f;
 
     private void Awake()
     {
@@ -30,20 +29,28 @@ public class SortBehaviour : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        uiManager = UIManager.Instance;
         StartSort();
     }
 
-    void StartSort()
+    public void StartSort()
     {
+        time = 0f;
         canContinue = false;
         finished = false;
         if (bubblesort != null) { bubblesort.DestroyBoxes();}
         RandomiseArray();
         CreateArrayBoxes();
         bubblesort = new BubbleSort(array, rockObjectArray[0].GetComponentInChildren<TextMeshProUGUI>().color ,parentPanel);
-        correctText.text = "Correct: 0";
-        incorrectText.text = "Incorrect: 0";
+        uiManager.correctText.text = "Correct: 0";
+        uiManager.incorrectText.text = "Incorrect: 0";
     }
+
+    public void ResetToArray()
+    {
+        bubblesort.ResetToArray();
+    }
+
 
     void RandomiseArray()
     {
@@ -57,14 +64,21 @@ public class SortBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.R)) { StartSort(); }
+        time += Time.deltaTime;
+        UIManager.Instance.UpdateTimer(time);
         if (Input.GetKeyDown(KeyCode.Backspace)) { bubblesort.ResetToArray(); }
-        if (Input.GetKeyDown(KeyCode.Return) && !finished) { canContinue = true; }
         if (canContinue) { canContinue = false; NextElement();}
     }
+
+    public void CheckCanContinue()
+    {
+        if (finished) { return; }
+        canContinue = true;
+    }
+
     void NextElement()
     {
-        finished = bubblesort.NextStep(ref correctText, ref incorrectText, parentPanel);
+        finished = bubblesort.NextStep(ref uiManager.correctText, ref uiManager.incorrectText, parentPanel);
         if (bubblesort.i > bubblesort.max - 2) { bubblesort.p++; bubblesort.i = 0;}
         if (finished) { bubblesort.HighlightCurrent(true); }
     }

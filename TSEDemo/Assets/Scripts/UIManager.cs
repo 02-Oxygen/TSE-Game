@@ -6,10 +6,15 @@ using UnityEngine;
 public class UIManager : MonoBehaviour
 {
     public static UIManager Instance;
-    // Start is called before the first frame update
-    void Start()
+
+    [SerializeField] GameObject touchScreenUI;
+    public TextMeshProUGUI timer;
+    public TextMeshProUGUI correctText;
+    public TextMeshProUGUI incorrectText;
+
+    private void Awake()
     {
-        if (Instance == null) { Instance = this;}
+        if (Instance == null) { Instance = this; }
     }
 
     // Update is called once per frame
@@ -21,6 +26,16 @@ public class UIManager : MonoBehaviour
     public void UpdateText(TextMeshProUGUI textObject, string text)
     {
         textObject.text = text;
+    }
+
+    public void updateTouchScreenUI()
+    {
+        touchScreenUI.SetActive(GameManager.Instance.touchscreen);
+    }
+
+    public void UpdateTimer(float time)
+    {
+        UpdateText(timer, Mathf.Floor(time).ToString());
     }
 
 }

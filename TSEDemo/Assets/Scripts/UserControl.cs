@@ -33,7 +33,7 @@ public class UserControl : MonoBehaviour
         else if (second == null)
         { 
             second = interactable;
-            SortBehaviour.Instance.bubblesort.BoxSwap(int.Parse(first.name), int.Parse(second.name));
+            SortBehaviour.Instance.sort.BoxSwap(int.Parse(first.name), int.Parse(second.name));
             ClearSwap();
         }
     }

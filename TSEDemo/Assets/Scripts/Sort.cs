@@ -6,8 +6,6 @@ using TMPro;
 using UnityEngine;
 using System.Linq;
 using UnityEngine.UI;
-using UnityEngine.UIElements;
-using Image = UnityEngine.UIElements.Image;
 
 [Serializable]
 public abstract class Sort
@@ -38,7 +36,7 @@ public abstract class Sort
         HighlightCurrent(false);
     }
 
-    public abstract bool NextStep(ref TextMeshProUGUI correctText, ref TextMeshProUGUI incorrectText, Transform parentPanel);
+    public abstract bool NextStep(Transform parentPanel);
     public abstract void SortArray();
 
     protected bool CheckBoxes(int a, int b)
@@ -100,7 +98,9 @@ public abstract class Sort
     {
         for (int i = 0; i < max; i++)
         {
-            parentPanel.GetChild(i).GetComponent<SwappableObject>().ChangeValue(array[i]);
+            SwappableObject swappableObject = parentPanel.GetChild(i).GetComponent<SwappableObject>();
+            swappableObject.ChangeValue(array[i]);
+            swappableObject.ChangeImage(swappableObject.originalImage);
         }
     }
 
@@ -112,6 +112,15 @@ public abstract class Sort
         }
     }
 
+    public void SetOriginalImage()
+    {
+        for (int i = 0; i < max; i++)
+        {
+            SwappableObject swappableObject = parentPanel.GetChild(i).GetComponent<SwappableObject>();
+            swappableObject.SetOrignalImage(swappableObject.image.sprite);
+        }
+    }
+
 
 }
 
@@ -120,7 +129,7 @@ public class BubbleSort : Sort
 {
     public BubbleSort(int[] array, Color textColour,Transform parentPanel) : base(array, textColour ,parentPanel) { }
 
-    public override bool NextStep(ref TextMeshProUGUI correctText, ref TextMeshProUGUI incorrectText, Transform parentPanel)
+    public override bool NextStep(Transform parentPanel)
     {
         array.CopyTo(resetArray, 0);
         if (array[i] > array[i + 1])
@@ -131,14 +140,13 @@ public class BubbleSort : Sort
         if (CheckBoxes(i, i + 1)) 
         {
             correct++; 
-            UIManager.Instance.UpdateText(correctText, "Correct: " + correct); 
             i++; 
             HighlightCurrent(false);
+            SetOriginalImage();
         }
         else
         {
             incorrect++;
-            UIManager.Instance.UpdateText(incorrectText, "Incorrect: " + incorrect);
             Array.Clear(array, 0, max);
             resetArray.CopyTo(array, 0);
             ResetToArray();

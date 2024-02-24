@@ -1,24 +1,27 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 [Serializable]
 public class SortBehaviour : MonoBehaviour
 {
     public static SortBehaviour Instance;
     public int[] array;
+    public int arrayMax;
     public GameObject[] rockObjectArray;
 
     [SerializeField] Transform parentPanel;   
 
-    public Sort bubblesort;
+    public Sort sort;
     public bool canContinue;
     public bool finished;
 
 
-    private UIManager uiManager;
     private float time = 0f;
 
     private void Awake()
@@ -29,7 +32,7 @@ public class SortBehaviour : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        uiManager = UIManager.Instance;
+        arrayMax = array.Length;
         StartSort();
     }
 
@@ -38,23 +41,30 @@ public class SortBehaviour : MonoBehaviour
         time = 0f;
         canContinue = false;
         finished = false;
-        if (bubblesort != null) { bubblesort.DestroyBoxes();}
+        sort?.DestroyBoxes();
+        RandomiseAmountofElements();
         RandomiseArray();
         CreateArrayBoxes();
-        bubblesort = new BubbleSort(array, rockObjectArray[0].GetComponentInChildren<TextMeshProUGUI>().color ,parentPanel);
-        uiManager.correctText.text = "Correct: 0";
-        uiManager.incorrectText.text = "Incorrect: 0";
+        sort = new BubbleSort(array, rockObjectArray[0].GetComponentInChildren<TextMeshProUGUI>().color ,parentPanel);
     }
 
     public void ResetToArray()
     {
-        bubblesort.ResetToArray();
+        sort.ResetToArray();
+    }
+
+    public void RandomiseAmountofElements()
+    {
+        System.Random rnd = new();
+        int randNum = rnd.Next(5, arrayMax);
+        Array.Clear(array, 0, array.Length);
+        array = new int[randNum];
     }
 
 
     void RandomiseArray()
     {
-        System.Random rnd = new System.Random();
+        System.Random rnd = new();
         for (int i = 0; i < array.Length; i++) 
         {
             array[i] = rnd.Next(0, 1000);
@@ -64,11 +74,12 @@ public class SortBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        time += Time.deltaTime;
+        if (!finished) { time += Time.deltaTime; }
         UIManager.Instance.UpdateTimer(time);
-        if (Input.GetKeyDown(KeyCode.Backspace)) { bubblesort.ResetToArray(); }
+        if (Input.GetKeyDown(KeyCode.Backspace)) { sort.ResetToArray(); }
         if (canContinue) { canContinue = false; NextElement();}
     }
+
 
     public void CheckCanContinue()
     {
@@ -78,14 +89,14 @@ public class SortBehaviour : MonoBehaviour
 
     void NextElement()
     {
-        finished = bubblesort.NextStep(ref uiManager.correctText, ref uiManager.incorrectText, parentPanel);
-        if (bubblesort.i > bubblesort.max - 2) { bubblesort.p++; bubblesort.i = 0;}
-        if (finished) { bubblesort.HighlightCurrent(true); }
+        finished = sort.NextStep(parentPanel);
+        if (sort.i > sort.max - 2) { sort.p++; sort.i = 0;}
+        if (finished) { sort.HighlightCurrent(true); GameStats.Instance.SetScore(sort.correct, sort.incorrect, time); }
     }
 
     void CreateArrayBoxes()
     {
-        System.Random rnd = new System.Random();
+        System.Random rnd = new();
         for (int i = 0; i < array.Length; i++)
         {
             int randNum = rnd.Next(0, rockObjectArray.Length);

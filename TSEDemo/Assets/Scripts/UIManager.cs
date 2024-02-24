@@ -9,18 +9,11 @@ public class UIManager : MonoBehaviour
 
     [SerializeField] GameObject touchScreenUI;
     public TextMeshProUGUI timer;
-    public TextMeshProUGUI correctText;
-    public TextMeshProUGUI incorrectText;
+    public TextMeshProUGUI scoretext;
 
     private void Awake()
     {
         if (Instance == null) { Instance = this; }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     public void UpdateText(TextMeshProUGUI textObject, string text)
@@ -28,14 +21,14 @@ public class UIManager : MonoBehaviour
         textObject.text = text;
     }
 
-    public void updateTouchScreenUI()
+    public void UpdateTouchScreenUI()
     {
         touchScreenUI.SetActive(GameManager.Instance.touchscreen);
     }
 
     public void UpdateTimer(float time)
     {
-        UpdateText(timer, Mathf.Floor(time).ToString());
+        UpdateText(timer, Mathf.Floor(time).ToString() + "s");
     }
 
 }

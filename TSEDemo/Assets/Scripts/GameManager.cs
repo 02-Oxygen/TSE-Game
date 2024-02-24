@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        UIManager.Instance.updateTouchScreenUI();
+        UIManager.Instance.UpdateTouchScreenUI();
         OnControlsChanged(GetComponent<PlayerInput>());
     }
 
@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
     {
         touchscreen = playerInput.currentControlScheme == "TouchScreen";
         if (UIManager.Instance == null) { return; }
-        UIManager.Instance.updateTouchScreenUI();
+        UIManager.Instance.UpdateTouchScreenUI();
     }
 
     private void OnEnable()

@@ -9,15 +9,25 @@ using UnityEngine.UI;
 public class SwappableObject : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public int value;
+    public Sprite originalImage;
     public Image image;
     public bool hoverOver = false;
 
     [SerializeField] TextMeshProUGUI valueText;
-    private SwappableObject swappableObject;
+
+    private void Start()
+    {
+        originalImage = image.sprite;
+    }
 
     private void Update()
     {
         Click();
+    }
+
+    public void SetOrignalImage(Sprite sprite)
+    {
+        originalImage = sprite;
     }
 
     public void ChangeValue(int value)
